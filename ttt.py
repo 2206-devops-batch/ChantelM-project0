@@ -55,12 +55,14 @@ class Players():
 class TicTacToe(Board, Players):
     """
     TicTacToe class subclass of Board and Markers
-    Parameters:
+    Parameters: mark1 and mark2 (assumed to be characters)
+    TODO: how to enforce parameter type to ensure string
+    TODO: remove internal print statements and use tuples to signal specific error?
     """
 
-    def __init__(self, m1, m2):
+    def __init__(self, mark1, mark2):
         Board.__init__(self, 3, 3)
-        Players.__init__(self, (m1, m2))
+        Players.__init__(self, (mark1, mark2))
         self.active = False
 
     def start_game(self):
