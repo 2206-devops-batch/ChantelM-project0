@@ -55,14 +55,12 @@ class Players():
 class TicTacToe(Board, Players):
     """
     TicTacToe class subclass of Board and Markers
-    Parameters: mark1 and mark2 (assumed to be characters)
-    TODO: how to enforce parameter type to ensure string
     TODO: remove internal print statements and use tuples to signal specific error?
     """
 
-    def __init__(self, mark1, mark2):
+    def __init__(self):
         Board.__init__(self, 3, 3)
-        Players.__init__(self, (mark1, mark2))
+        Players.__init__(self, ('x', 'o'))
         self.active = False
 
     def __str__ (self): #TODO: condense
@@ -87,11 +85,9 @@ class TicTacToe(Board, Players):
 
     def make_move(self, row, col):
         if (row >= self.rows or col >= self.cols):
-            print('Row or Column not within bounds')
             return False
         
         if self.board[row][col] is not None:
-            print("There's already a marker there.")
             return False
         
         self.update_board(row, col, self.markers[self.cur_player])
@@ -142,7 +138,7 @@ class TicTacToe(Board, Players):
 
 # Example game play
 if __name__ == '__main__':
-    t3 = TicTacToe('x', 'o')
+    t3 = TicTacToe()
     # print(t3)
     t3.start_game()
     while t3.active:
