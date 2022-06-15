@@ -143,28 +143,27 @@ class TicTacToe(Board, Players):
 # Example game play
 if __name__ == '__main__':
     t3 = TicTacToe('x', 'o')
-    print(t3)
-    # t3.display_board
-    # t3.start_game()
-    # while t3.active:
+    # print(t3)
+    t3.start_game()
+    while t3.active:
         
-    #     moved = False
-    #     while not moved:
-    #         req_move = input(f'Player {t3.cur_player}, enter your move: ').split(' ')
+        moved = False
+        while not moved:
+            req_move = input(f'Player {t3.cur_player}, enter your move: ').split(' ')
             
-    #         if len(req_move) != 2:
-    #             print('Expected 2 values separated by a space(ex: 1 2). Try again')
-    #             continue
+            if len(req_move) != 2:
+                print('Expected 2 values separated by a space(ex: 1 2). Try again')
+                continue
 
-    #         if not req_move[0].isdigit() or not req_move[1].isdigit():
-    #             print('Received a non-numeric input. Try again')
-    #             continue
+            if not req_move[0].isdigit() or not req_move[1].isdigit():
+                print('Received a non-numeric input. Try again')
+                continue
 
-    #         move = [int(x) for x in req_move]
-    #         moved = t3.make_move(move[0], move[1])
+            move = [int(x) for x in req_move]
+            moved = t3.make_move(move[0], move[1])
     
-    #     t3.update_game()
-    #     t3.display_board()
-    #     print()
+        t3.update_game()
+        t3.display_board()
+        print()
 
-    # print(f'')
+    print(f'')

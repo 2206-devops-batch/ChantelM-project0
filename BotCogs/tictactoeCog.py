@@ -1,15 +1,15 @@
 # from attr import s
 # import sys
 # sys.path.append("..")
+# from Games.tictactoeGame import TicTacToe
+
 from dotenv import dotenv_values
 from discord.ext import commands
 
-# sys.path.append("..")
-# from Games.tictactoeGame import TicTacToe
-# ttt = TicTacToe('x', 'o')
-# ttt.display_board()
 """
 Discord library's commands framework is used to extend bot's functionality.
+commands: https://discordpy.readthedocs.io/en/stable/ext/commands/commands.html
+groups for subcommands: https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#group
 """
 
 class TicTacToeCog(commands.Cog):
@@ -21,15 +21,34 @@ class TicTacToeCog(commands.Cog):
     def __init___(self, bot):
         self.bot = bot
 
-    @commands.command(description="Provide name of user to challenge")
-    async def tictactoe(self, ctx, username):
-        # ?help tic_tac_toe from commands framework
-        await ctx.send(f"Challenge {username} to tic tac toe by creating private channel and sending invite")
+    @commands.group(description="Parent command for tic tac toe game")
+    async def tictactoe(self, ctx):
+        pass
 
-    # @commands.command(description="Provide name of user to challenge")
-    # async def tic_tac_toe(self, ctx, username):
-    #     # ?help tic_tac_toe from commands framework
-    #     await ctx.send(f"Challenge {username} to tic tac toe")
+    @tictactoe.command(description="Provide name of user to challenge to a game of tic tac toe")
+    async def challenge(self, ctx, username):
+        #TODO: send private message to username
+        await ctx.send(f"Challenge {username} to tic tac toe by sending a private message")
+
+    @tictactoe.command(description="To start game, provide a row followed by a column (between 0 and 2): '0 0'")
+    async def accept(self, ctx, row, column):
+        #TODO: start game, update board, & send private message to username displaying the board
+        await ctx.send(f"Player 0 accepted with first move: {row}, {column}. Send challenger private message with updated board")
+    
+    @tictactoe.command(description="Deny request")
+    async def deny(self, ctx):
+        #TODO: send private message to initial challenger
+        await ctx.send(f'Let original challenger know {ctx.message.author.name} has denied request')
+
+    @tictactoe.command(description="Provide a row followed by a column (between 0 and 2): 0 0")
+    async def move(self, ctx, row, column, gameID=None):
+        #TODO: player moves, send updated board to other player in private message if no winner
+        await ctx.send(f"Game updated with player's move and opponent notified")
+
+    @tictactoe.command(description="Exit tictactoe game")
+    async def quit(self, ctx):
+        #TODO: terminate the game and notify all parties
+        await ctx.send(f"{ctx.message.author.name} has quit the game of tictactoe.")
 
 
 

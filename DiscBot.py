@@ -12,7 +12,8 @@ class DiscordBot:
     def login_bot(self, secret_key):
         self.cBot.run(secret_key)
 
-    def add_all_cogs(self): #TODO: find alternative to creating list
+    def add_all_cogs(self): 
+        #TODO: try implement using a text file of Module Class cycle through 'from {Module} import {class}(self.cBot)'
         for i in COGS_TO_ADD:
             self.cBot.add_cog(i(self.cBot))
     
