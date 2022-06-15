@@ -1,2 +1,5 @@
-notes.txt
+notes.md
 bot/
+.vscode/
+__pycache__/
+.env
