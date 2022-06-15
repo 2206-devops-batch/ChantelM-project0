@@ -1,6 +1,8 @@
 from dotenv import dotenv_values
 from discord.ext import commands
-import BotCogs
+from BotCogs.tictactoeCog import TicTacToeCog
+
+COGS_TO_ADD = [TicTacToeCog]
 
 
 class DiscordBot:
@@ -10,13 +12,12 @@ class DiscordBot:
     def login_bot(self, secret_key):
         self.cBot.run(secret_key)
 
-    def add_all_cogs(self):
-        # tt = BotCogs.TicTacToeCog(self.cBot)
+    def add_all_cogs(self): #TODO: find alternative to creating list
+        for i in COGS_TO_ADD:
+            self.cBot.add_cog(i(self.cBot))
     
 
 if __name__ == "__main__":
-    # print(bot_commands.COMMAND_PREFIX)
-    # print(bot_commands.COMMANDS)
     t1 = DiscordBot(dotenv_values(".env")["COMMAND_PREFIX"])
     t1.add_all_cogs()
     t1.login_bot(dotenv_values(".env")['DISCORD_TEST_TOKEN'])
