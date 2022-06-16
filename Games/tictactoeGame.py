@@ -130,10 +130,13 @@ class TicTacToe(Board, Players):
         if self.check_for_winner(): # update winner to player # and stop game
             self.winner = self.markers.index(self.winner)
             self.end_game()
+            return (False, self.winner)
 
         elif self.board_full():
-            print(f'board is full')
             self.end_game()
+            return (False, 'full')
+
+        return (True, None)
 
 
 # Example game play
