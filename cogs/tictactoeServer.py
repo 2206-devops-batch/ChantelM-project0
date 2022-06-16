@@ -1,7 +1,6 @@
 import sys
 sys.path.append("..")
 from random import randint
-from copy import deepcopy
 from Games.tictactoeGame import TicTacToe
 import discord
 #TODO: reduce conditionals ? maybe use error pool
@@ -33,13 +32,12 @@ def find_game(player0, player1=None):
     return all_games if len(all_games) > 0 else None
 
 
-def initiate_game_data(player0, player1, pDiscord0, pDiscord1): #challenge
+def initiate_game_data(player0, player1, id0, id1): #challenge
     existing_game = find_game(player0, player1)
     
     if existing_game is None:
-        ttt_games[generate_game_id()] = {"players": [player0, player1], "ids": [pDiscord0, pDiscord1], "game": TicTacToe()}
-        return (True, [pDiscord0, pDiscord1])
-        # return (True, None)
+        ttt_games[generate_game_id()] = {"players": [player0, player1], "ids": [ id0, id1], "game": TicTacToe()}
+        return (True, [ id0, id1])
 
     return (False, existing_game)
 
@@ -59,10 +57,10 @@ def player_move(player_moving, r, c, gameID=None): #move
 
             if ttt_games[gameID[0]]["players"].index(player_moving) == ttt_games[gameID[0]]['game'].cur_player:
                 ttt_games[gameID[0]]["game"].make_move(rcInts[0], rcInts[1])
-                
                 update = ttt_games[gameID[0]]["game"].update_game()
+  
                 if update[0]:
-                    opponent = ttt_games[gameID[0]]["players"][ttt_games[gameID[0]]['game'].cur_player]
+                    opponent = ttt_games[gameID[0]]["ids"][ttt_games[gameID[0]]['game'].cur_player]
                     return (True, False, f"{player_moving} has made a move:\n {ttt_games[gameID[0]]['game']}", opponent)
 
                 elif update[1] == "full":
@@ -84,7 +82,7 @@ def deny_game_start(player, gameID=None, attachBoard=False, msg=None): #deny
 
         if len(gameID) == 1:
 
-            opponent = 0 if gameID[0]["players"][1] == player else 1
+            opponent = gameID[0]["ids"][0] if gameID[0]["players"][1] == player else gameID[0]["ids"][1]
             del ttt_games[gameID[0]]
  
             return (True, True, msg, opponent)
