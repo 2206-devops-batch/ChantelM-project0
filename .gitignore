@@ -3,5 +3,3 @@ bot/
 .vscode/
 __pycache__/
 .env
-t1.py
-t2.py

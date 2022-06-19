@@ -7,25 +7,32 @@ class Board:
     """
 
     def __init__(self, r, c):
+        # stores specified row and column values and instantiates @d list using nested list comprehension
+        
         self.rows = r
         self.cols = c
         self.board = [[None for x in range(self.cols)] for y in range(self.rows)]
 
     def display_board(self):
+        # displays board by row by row and replaces None value with a space
+
         for y in self.board:
             for x in y:
-                if x is not None:
-                    print(x, end=' | ')
-                else:
-                    print(' ', end=' | ')
+                print(f"{x if x is not None else ' '}", end=' |')
 
             print()
             print('------------')
 
     def update_board(self, row, col, marker):
+        # if request row and column is open, updates board with marker and return True. Otherwise returns False
+        if self.board[row][col] is not None:
+            return False
+        
         self.board[row][col] = marker
+        return True
 
     def board_full(self):
+        # returns True if all board elements are occupied with a marker
         for y in self.board:
             for x in y:
                 if x is None:
@@ -48,6 +55,7 @@ class Players():
         self.markers = marks
     
     def update_player(self):
+        # updates cur_player by cycling through num_players
         next_player = self.cur_player + 1
         self.cur_player = next_player if next_player < self.num_players else 0
 
@@ -55,7 +63,6 @@ class Players():
 class TicTacToe(Board, Players):
     """
     TicTacToe class subclass of Board and Markers
-    TODO: remove internal print statements and use tuples to signal specific error?
     """
 
     def __init__(self):
@@ -79,22 +86,29 @@ class TicTacToe(Board, Players):
         self.active = True
 
     def end_game(self):
-        print("end game")
         self.active = False
         self.cur_player = None
 
-    def make_move(self, row, col):
-        if (row >= self.rows or col >= self.cols):
+    def check_in_range(self, num):
+        # verifies value is within row and column range
+
+        if 0 > num or num >= 3:
             return False
-        
-        if self.board[row][col] is not None:
-            return False
-        
-        self.update_board(row, col, self.markers[self.cur_player])
-        self.update_player()
+
         return True
 
+    def make_move(self, row, col):
+        # facilitates game play by updating board and current player when a player moves
+        if self.check_in_range(row) and self.check_in_range(col):
+            if self.update_board(row, col, self.markers[self.cur_player]):
+                self.update_player()
+                return True
+
+        return False
+        
+
     def check_rows(self):
+        # if any row has 3 matches, updates self.winner and returns True
         for y in range(self.rows):
             if self.board[y][0] is not None and self.board[y][0] == self.board[y][1] == self.board[y][2]:
                 self.winner = self.board[y][0]
@@ -103,6 +117,7 @@ class TicTacToe(Board, Players):
         return False
 
     def check_columns(self):
+        # if any column has 3 matches, updates self.winner and returns True
         for x in range(self.cols):
             if self.board[0][x] is not None and self.board[0][x] == self.board[1][x] == self.board[2][x]:
                 self.winner = self.board[0][x]
@@ -111,6 +126,7 @@ class TicTacToe(Board, Players):
         return False
 
     def check_diagonals(self):
+        # if any diagonal has 3 matches, updates self.winner and returns True
         if self.board[1][1] is not None:
             lr_diagonal = self.board[0][0] == self.board[1][1] == self.board[2][2]
             rl_diagonal = self.board[0][2] == self.board[1][1] == self.board[2][0]
@@ -120,6 +136,7 @@ class TicTacToe(Board, Players):
         return False
 
     def check_for_winner(self):
+        # returns True if winner found
         if not self.check_rows():
             if not self.check_columns():
                 return self.check_diagonals()
@@ -138,31 +155,3 @@ class TicTacToe(Board, Players):
 
         return (True, None)
 
-
-# Example game play
-if __name__ == '__main__':
-    t3 = TicTacToe()
-    # print(t3)
-    t3.start_game()
-    while t3.active:
-        
-        moved = False
-        while not moved:
-            req_move = input(f'Player {t3.cur_player}, enter your move: ').split(' ')
-            
-            if len(req_move) != 2:
-                print('Expected 2 values separated by a space(ex: 1 2). Try again')
-                continue
-
-            if not req_move[0].isdigit() or not req_move[1].isdigit():
-                print('Received a non-numeric input. Try again')
-                continue
-
-            move = [int(x) for x in req_move]
-            moved = t3.make_move(move[0], move[1])
-    
-        t3.update_game()
-        t3.display_board()
-        print()
-
-    print(f'')

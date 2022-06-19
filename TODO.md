@@ -42,7 +42,7 @@
       - [x] update board
       - [x] check for a winner
       - [x] **str** for ttt class
-- [ ] commands
+- [x] commands
   - [x] ?tictactoe [ ] functional
     - [x] ?challenge [x] functional
       - [x] player1: ?tictactoe challenge username
@@ -73,7 +73,7 @@
       - [x] find gameID
       - [x] del gameID['game]
       - [x] notify both game has been ended by author
-- [ ] discord bot deploy with game
+- [x] discord bot deploy with game
   - [x] initial commands
   - [x] commands functionality without server functions
   - [ ] commands functionality with server functions

@@ -1,17 +1,34 @@
 from dotenv import dotenv_values
 from discord.ext import commands
 import discord
-import server_funcs.tictactoeServer as tictactoeServer
 import socket
+import sys
+import sys
+sys.path.append("../../../")
+
+"""
+Commands extension provides the basis for integrating commands and subcommands.
+"""
+
+#FIXME: dotenv variables with cogs?
+HOST='localhost'
+PORT=9031
 
 
 class Tictactoe(commands.Cog):
+    """
+    TicTacToe subclass of discord.ext.commands.Cog class used for organizing commands, listeners, and state.
+
+    TODO: look into cogs as inter-command communication
+    """
     def __init__(self, bot):
         self.bot = bot
+        self.srvr_HOST = HOST
+        self.srvr_PORT = PORT
 
     def contact_server(self, msg):
         lanClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        lanClient.connect((dotenv_values(".env")['HOST'], int(dotenv_values(".env")['PORT'])))
+        lanClient.connect((self.srvr_HOST, self.srvr_PORT))
 
         lanClient.send(msg.encode('utf-8'))
         return lanClient.recv(1024).decode("utf-8")
@@ -98,4 +115,3 @@ class Tictactoe(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Tictactoe(bot))
-
