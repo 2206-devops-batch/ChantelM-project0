@@ -9,7 +9,8 @@ tttGames = tttS.TicTacToeSrvr()
 
 
 tttSwitcher = {"1": tttGames.initiate_game_data, "2": tttGames.initiate_game_start, 
-    "3": tttGames.deny_game_start, "4": tttGames.move_player, "5": tttGames.end_game}
+    "3": tttGames.deny_game_start, "4": tttGames.move_player, "5": tttGames.end_game,
+    "6": tttGames.autoplay}
 
 
 #internet, tcp
@@ -29,7 +30,6 @@ while True:
     ret_msg = "Error: "
 
     try:
-        print(func, tttSwitcher[func], msg_data)
         ret_msg=tttSwitcher[func](msg_data)
         
     except:

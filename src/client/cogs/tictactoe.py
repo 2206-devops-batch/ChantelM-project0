@@ -112,6 +112,11 @@ class Tictactoe(commands.Cog):
         else:
             await ctx.send(f"Error: {res[1]}")
 
+    @tictactoe.command(description="Exit tictactoe game")
+    async def autoplay(self, ctx):
+        res = self.contact_server(f"6 None")
+        await ctx.send(res)
+
 
 def setup(bot):
     bot.add_cog(Tictactoe(bot))

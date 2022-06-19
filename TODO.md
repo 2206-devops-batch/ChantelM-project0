@@ -9,23 +9,15 @@
 
 ## TODO:
 
+- README
 - [ ] Testing:
   - [ ] dpytest for discord bot
   - [ ] [unittest](https://docs.python.org/3/library/unittest.html)
     - [ ] socket listening message
-    - [ ] play through tic tac toe
-      - [ ] request & deny
-      - [ ] request & accept & quit
-      - [ ] request & accept
-        - [ ] winner
-        - [ ] stalemate
 - [ ] Automate:
   - [ ] automate testing
     - [ ] server
-    - [ ] games
     - [ ] bot
-  - [ ] if passed, deploy
-  - [ ] else log failed tests
 - [ ] Attempt ansible
 
 ## Completed:
@@ -95,3 +87,12 @@
 - [x] Store Persistent Data TODO: determine best method using a server to store data
   - [x] call to local server
   - [x] store games as objects on server
+- [ ] Testing:
+  - [ ] [unittest](https://docs.python.org/3/library/unittest.html)
+    - [x] tic tac toe game
+    - [x] tic tac toe server
+- [ ] Automate:
+  - [ ] automate testing
+    - [x] src/server/tictactoe
+  - [x] if passed, start
+  - [x] else notify tests failed

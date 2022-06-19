@@ -38,22 +38,20 @@ class TestTicTacToeBoardClass(unittest.TestCase):
         self.test_tttS.ttt_games['1'] = {"players": ["player0", "player3"], "ids": [ "id2", "id3"], "game": None}
         self.assertEqual(self.test_tttS.find_game("player0"), ["0", "1"])
     
-    # def test_initiate_game_data(self):
-    #     test=False
-    #     self.assertTrue(test)
-        # test_data = "someP1 someP2 00 01"
-        # result = [self.test_tttS.initiate_game_data(test_data), self.test_tttS.initiate_game_data(test_data)]
-        # expected = ['True 00 01', 'False Found existing gameid: ']
+    def test_initiate_game_data(self):
+        test_data = "someP1 someP2 00 01"
+        result = [self.test_tttS.initiate_game_data(test_data), self.test_tttS.initiate_game_data(test_data)]
+        expected = ['True 00 01', 'False Found existing gameid: ']
 
-    #     for i in range(2):
-    #         with self.subTest():
-    #             self.assertIn(expected[i], result[i])
+        for i in range(2):
+            with self.subTest():
+                self.assertIn(expected[i], result[i])
 
-    # def test_deny_game_start(self):
-    #     test_data = "someP1 someP2 00 01"
-    #     result = self.test_tttS.initiate_game_data(test_data)
-    #     expected = "True 00 01"
-    #     self.assertEqual(result, expected)
+    def test_deny_game_start(self):
+        test_data = "someP1 someP2 00 01"
+        result = self.test_tttS.initiate_game_data(test_data)
+        expected = "True 00 01"
+        self.assertEqual(result, expected)
 
     def test_initiate_game(self):
         testStrs = ["p80 0 0 None", "p1 0 0 None", "p0 0 0 None"]

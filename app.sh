@@ -1,8 +1,5 @@
 #! /bin/bash
 
-serverScript='./src/server/srvrsock.py'
-botScript='./src/client/game_bot.py'
-
 # run tests
 run_tests(){
     failed=""
