@@ -1,7 +1,8 @@
 import sys
-sys.path.append("..")
+import sys
+sys.path.append("../../../")
+import src.server.tictactoe.tictactoeGame as tttG
 from random import randint
-from tictactoe.tictactoeGame import TicTacToe as tttG
 
 class TicTacToeSrvr():
     """
