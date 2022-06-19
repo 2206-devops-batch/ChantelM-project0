@@ -5,9 +5,6 @@ import tictactoe.tictactoeServer as tttS
 # HOST = socket.gethostbyname(socket.gethostname()) <- returns loopback ip, not sure why
 # HOST = dotenv_values("../.env")['PRIVATE_IP_ADDRESS'] <- TODO: script private ip via hostname -I 
 
-def server_test():
-    return "From server.server"
-
 tttGames = tttS.TicTacToeSrvr()
 
 
@@ -15,7 +12,7 @@ tttSwitcher = {"1": tttGames.initiate_game_data, "2": tttGames.initiate_game_sta
     "3": tttGames.deny_game_start, "4": tttGames.move_player, "5": tttGames.end_game}
 
 
-# #internet, tcp
+#internet, tcp
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 server.bind((dotenv_values("../../.env")['HOST'], int(dotenv_values("../../.env")['PORT'])))
@@ -42,5 +39,4 @@ while True:
     conn_socket.send(ret_msg.encode('utf-8'))
     conn_socket.close()
 
-# # TODO: capture ctrl+c, to exit gracefully
-print(server_test())
+# TODO: capture ctrl+c, to exit gracefully

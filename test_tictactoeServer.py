@@ -39,9 +39,11 @@ class TestTicTacToeBoardClass(unittest.TestCase):
         self.assertEqual(self.test_tttS.find_game("player0"), ["0", "1"])
     
     # def test_initiate_game_data(self):
-    #     test_data = "someP1 someP2 00 01"
-    #     result = [self.test_tttS.initiate_game_data(test_data), self.test_tttS.initiate_game_data(test_data)]
-    #     expected = ['True 00 01', 'False Found existing gameid: ']
+    #     test=False
+    #     self.assertTrue(test)
+        # test_data = "someP1 someP2 00 01"
+        # result = [self.test_tttS.initiate_game_data(test_data), self.test_tttS.initiate_game_data(test_data)]
+        # expected = ['True 00 01', 'False Found existing gameid: ']
 
     #     for i in range(2):
     #         with self.subTest():
@@ -71,5 +73,20 @@ class TestTicTacToeBoardClass(unittest.TestCase):
         self.test_tttS = None
         self.challenged = None
 
+def main(out = sys.stderr, verbosity = 2):
+    """
+    https://www.geeksforgeeks.org/python-logging-test-output-to-a-file/
+    The instance of TestLoader class is similar to defaultTestLoader.
+    It creates test suites from the specified module by using loadTestsFromModule method
+    to search the module for classes derived unittest's TestCase class and returns a test suite.
+    unittest TextTestRunner streams the output to stdout and verbosity set to 1
+    """
+    loader = unittest.TestLoader()
+  
+    suite = loader.loadTestsFromModule(sys.modules[__name__])
+    unittest.TextTestRunner(out, verbosity=1).run(suite)
+
 if __name__ == '__main__':
-    unittest.main()
+    # unittest.main()
+    with open("test_results.txt", "a") as f:
+        main(f)

@@ -11,4 +11,3 @@ async def on_ready():
 bot.load_extension("cogs.tictactoe")
 
 bot.run(dotenv_values("../../.env")['DISCORD_TEST_TOKEN'])
-

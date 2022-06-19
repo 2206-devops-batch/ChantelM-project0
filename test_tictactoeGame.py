@@ -1,6 +1,7 @@
 import unittest
 import sys
-sys.path.append("..")
+# sys.path.append("..")
+# import src.server.tictactoe.tictactoeGame as tttG
 import src.server.tictactoe.tictactoeGame as tttG
 
 """
@@ -192,13 +193,20 @@ class TestTicTacToeGameClass(unittest.TestCase):
         self.test_game = None
 
 
-# def suite():
-#    suite = unittest.TestSuite()
-# ##   suite.addTest (simpleTest3("testadd"))
-# ##   suite.addTest (simpleTest3("testsub"))
-#    suite.addTest(unittest.makeSuite(simpleTest3))
-#    return suite
-
+def main(out = sys.stderr, verbosity = 2):
+    """
+    https://www.geeksforgeeks.org/python-logging-test-output-to-a-file/
+    The instance of TestLoader class is similar to defaultTestLoader.
+    It creates test suites from the specified module by using loadTestsFromModule method
+    to search the module for classes derived unittest's TestCase class and returns a test suite.
+    unittest TextTestRunner streams the output to stdout and verbosity set to 1
+    """
+    loader = unittest.TestLoader()
+  
+    suite = loader.loadTestsFromModule(sys.modules[__name__])
+    unittest.TextTestRunner(out, verbosity=1).run(suite)
 
 if __name__ == '__main__':
-    unittest.main()
+    # unittest.main()
+    with open("test_results.txt", "a") as f:
+        main(f)
