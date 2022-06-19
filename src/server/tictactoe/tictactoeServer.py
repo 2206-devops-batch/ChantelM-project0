@@ -1,7 +1,8 @@
 import sys
 import sys
 sys.path.append("../../../")
-from src.server.tictactoe.tictactoeGame import TicTacToe as tttG
+# from src.server.tictactoe.tictactoeGame import TicTacToe as tttG
+import tictactoe.tictactoeGame as tttG
 from random import randint, randrange
 
 class TicTacToeSrvr():
@@ -46,7 +47,7 @@ class TicTacToeSrvr():
         existing_game = self.find_game(player0, player1)
         
         if existing_game is None:
-            self.ttt_games[self.generate_game_id()] = {"players": [player0, player1], "ids": [ id0, id1], "game": tttG()}
+            self.ttt_games[self.generate_game_id()] = {"players": [player0, player1], "ids": [ id0, id1], "game": tttG.TicTacToe()}
             return (f"True {id0} {id1}")
 
         return (f"False Found existing gameid: {existing_game}")
@@ -151,7 +152,7 @@ class TicTacToeSrvr():
 
     def autoplay(self, data):
         # example game play using TicTacToe class from tictactoeGame
-        game = tttG()
+        game = tttG.TicTacToe()
         game.start_game()
 
         while game.active:

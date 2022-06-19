@@ -16,7 +16,7 @@ tttSwitcher = {"1": tttGames.initiate_game_data, "2": tttGames.initiate_game_sta
 #internet, tcp
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server.bind((dotenv_values("../../.env")['HOST'], int(dotenv_values("../../.env")['PORT'])))
+server.bind((dotenv_values(".env")['HOST'], int(dotenv_values(".env")['PORT'])))
 
 server.listen()
 print(f"Server listening")
