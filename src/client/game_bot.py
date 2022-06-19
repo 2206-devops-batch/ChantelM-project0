@@ -1,13 +1,14 @@
 from dotenv import dotenv_values
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix='?')
 
-@bot.event
+# bot = commands.Bot(command_prefix='?')
 
-async def on_ready():
-    print("game_bot logged in")
+# @bot.event
 
-bot.load_extension("cogs.tictactoe")
+# async def on_ready():
+#     print("game_bot logged in")
 
-bot.run(dotenv_values("../../.env")['DISCORD_TEST_TOKEN'])
+# bot.load_extension("cogs.tictactoe")
+
+# bot.run(dotenv_values("../../.env")['DISCORD_TEST_TOKEN'])

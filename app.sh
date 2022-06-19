@@ -14,24 +14,12 @@ run_tests(){
     echo $failed
 }
 
-# start server
-start_server(){
-    python3 ./src/server/srvrsock.py &
-    echo $$
-}
-
-# start bot
-start_bot(){
-    python3 ./src/client/game_bot.py &
-    echo $$
-}
-
 test_res=$(run_tests)
 
 if [ -z "$test_res" ]; then
-    # serverPID=$(start_server)
-    # botPID=$(start_bot)
+    # start server in the background and client in the foregroun
     python3 ./src/server/srvrsock.py & python3 ./src/client/game_bot.py && fg
+    echo "Press ctrl+c (once) to terminate game_bot.py and (twice) srvrsock.py"
 else
     echo "There was a failure. Review test_results.txt"
 fi
