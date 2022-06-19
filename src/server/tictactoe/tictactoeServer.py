@@ -1,8 +1,8 @@
 import sys
 import sys
 sys.path.append("../../../")
-import src.server.tictactoe.tictactoeGame as tttG
-from random import randint
+from src.server.tictactoe.tictactoeGame import TicTacToe as tttG
+from random import randint, randrange
 
 class TicTacToeSrvr():
     """
@@ -149,3 +149,24 @@ class TicTacToeSrvr():
 
         return (f"False game not found")
 
+    def autoplay(self, data):
+        # example game play using TicTacToe class from tictactoeGame
+        game = tttG()
+        game.start_game()
+
+        while game.active:
+            move = randrange(3), randrange(3)
+
+            game.make_move(move[0], move[1])
+            game.update_game()
+
+        if game.winner is None:
+            return (f"No winner this game. {str(game)}")
+        return (f"Player {game.winner} using '{game.markers[game.winner]}' markers won! {str(game)}")
+        
+        
+
+
+
+tS = TicTacToeSrvr()
+tS.autoplay("None")
