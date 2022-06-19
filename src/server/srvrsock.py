@@ -1,22 +1,21 @@
 import socket
 from dotenv import dotenv_values
-import server_funcs.tictactoeServer
+import tictactoe.tictactoeServer as tttS
 
 # HOST = socket.gethostbyname(socket.gethostname()) <- returns loopback ip, not sure why
-# HOST = dotenv_values(".env")['PRIVATE_IP_ADDRESS'] <- private ip via hostname -I
+# HOST = dotenv_values("../.env")['PRIVATE_IP_ADDRESS'] <- TODO: script private ip via hostname -I 
 
-i_g_d = getattr(server_funcs.tictactoeServer, 'initiate_game_data')
-i_g_s = getattr(server_funcs.tictactoeServer, 'initiate_game_start')
-d_g_s = getattr(server_funcs.tictactoeServer, 'deny_game_start')
-m_p = getattr(server_funcs.tictactoeServer, 'move_player')
-e_g = getattr(server_funcs.tictactoeServer, 'end_game')
+tttGames = tttS.TicTacToeSrvr()
 
-tttSwitcher = {"1": i_g_d, "2": i_g_s, "3": d_g_s, "4": m_p, "5": e_g}
+
+tttSwitcher = {"1": tttGames.initiate_game_data, "2": tttGames.initiate_game_start, 
+    "3": tttGames.deny_game_start, "4": tttGames.move_player, "5": tttGames.end_game}
+
 
 #internet, tcp
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server.bind((dotenv_values(".env")['HOST'], int(dotenv_values(".env")['PORT'])))
+server.bind((dotenv_values("../../.env")['HOST'], int(dotenv_values("../../.env")['PORT'])))
 
 server.listen()
 print(f"Server listening")
