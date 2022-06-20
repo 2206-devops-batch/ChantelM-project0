@@ -1,5 +1,11 @@
 #! /bin/bash
 
+setup_env(){
+    python3 -m venv d_bot
+    source d_bot/bin/activate
+    pip3 install -r requirements.txt
+}
+
 # run tests
 run_tests(){
     failed=""

@@ -1,4 +1,4 @@
 DISCORD_TEST_TOKEN=
 COMMAND_PREFIX=
-HOST=localhost
+HOST='localhost'
 PORT=

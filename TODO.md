@@ -5,7 +5,6 @@
 [discord.py](https://discordpy.readthedocs.io/en/stable/)
 
 - [Discord API](https://discordpy.readthedocs.io/en/stable/api.html)
-  [dpytest](https://dpytest.readthedocs.io/en/latest/)
 
 ## TODO:
 
