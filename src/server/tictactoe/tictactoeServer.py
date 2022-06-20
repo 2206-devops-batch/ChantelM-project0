@@ -1,5 +1,4 @@
 import sys
-import sys
 sys.path.append("../../../")
 # from src.server.tictactoe.tictactoeGame import TicTacToe as tttG
 import tictactoe.tictactoeGame as tttG
@@ -50,7 +49,7 @@ class TicTacToeSrvr():
             self.ttt_games[self.generate_game_id()] = {"players": [player0, player1], "ids": [ id0, id1], "game": tttG.TicTacToe()}
             return (f"True {id0} {id1}")
 
-        return (f"False Found existing gameid: {existing_game}")
+        return (f"False Found existing gameid: {existing_game}. Please add at the end of the command to proceed")
 
     def move_player(self, req_move):
         # supports bot move subcommand by correlating data with make_move
@@ -67,7 +66,6 @@ class TicTacToeSrvr():
         #             
                     if self.ttt_games[gameID[0]]["game"].make_move(int(r), int(c)):
                         update = self.ttt_games[gameID[0]]["game"].update_game()
-    
                         if update[0]:
                             opponent = self.ttt_games[gameID[0]]["ids"][self.ttt_games[gameID[0]]['game'].cur_player]
                             return (f"True False {opponent} {player_moving} has made a move:\n {self.ttt_games[gameID[0]]['game']}")
@@ -138,7 +136,7 @@ class TicTacToeSrvr():
             if len(gameID) == 1:
 
                 if gameWon:
-                    board = str(self.ttt_games[gameID[0]]["game"])
+                    board = self.ttt_games[gameID[0]]["game"]
                     return self.deny_game_start(f"player_moving gameID {player_moving} has won the game. {board}")
                 
                 elif boardFull:
@@ -163,9 +161,9 @@ class TicTacToeSrvr():
 
         if game.winner is None:
             return (f"No winner this game. {str(game)}")
-        return (f"Player {game.winner} using '{game.markers[game.winner]}' markers won! {str(game)}")
+        return (f"Player {game.winner} using '{game.markers[game.winner]}' won! {str(game)}")
         
-        
+    
 
 
 
