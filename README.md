@@ -44,8 +44,10 @@ along with associated players' data.
 Below is a list of frameworks used in this project.
 
 - [discord.py](https://discordpy.readthedocs.io/en/stable/)
-  - [Bot Commands Framework](https://discordpy.readthedocs.io/en/stable/ext/commands/index.html)
+  - [Bot Commands Framework](https://discordpy.readthedocs.io/en/stable/ext/c
+    - ommands/index.html)
 - [unittest](https://docs.python.org/3/library/unittest.html)
+
 
 ## Project Structure
 

@@ -8,8 +8,8 @@ Commands extension provides the basis for integrating commands and subcommands.
 """
 
 
-HOST=
-PORT=
+HOST='localhost'
+PORT=9031
 
 
 class Tictactoe(commands.Cog):

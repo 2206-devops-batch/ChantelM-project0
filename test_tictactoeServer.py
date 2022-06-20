@@ -35,7 +35,7 @@ class TestTicTacToeBoardClass(unittest.TestCase):
     def test_find_game_1_player(self):
         self.test_tttS.ttt_games['0'] = {"players": ["player0", "player1"], "ids": [ "id0", "id1"], "game": None}
         self.test_tttS.ttt_games['1'] = {"players": ["player0", "player3"], "ids": [ "id2", "id3"], "game": None}
-        self.assertEqual(self.test_tttS.find_game("player0"), ["0", "1"])
+        self.assertEqual(self.test_tttS.find_game("player0"), [['0', 'player0', 'player0'], ['1', 'player0', 'player0']])
     
     def test_initiate_game_data(self):
         test_data = "someP1 someP2 00 01"
