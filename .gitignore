@@ -1,6 +1,8 @@
 notes.md
 bot/
-bot2/
 .vscode/
 __pycache__/
 .env
+node_modules/
+*.json
+main.py

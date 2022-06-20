@@ -1,8 +1,7 @@
 import sys
-import sys
-sys.path.append("../../../")
-import src.server.tictactoe.tictactoeGame as tttG
-from random import randint
+sys.path.append("./src/server/tictactoe")
+import tictactoeGame as tttG
+from random import randint, randrange
 
 class TicTacToeSrvr():
     """
@@ -46,10 +45,10 @@ class TicTacToeSrvr():
         existing_game = self.find_game(player0, player1)
         
         if existing_game is None:
-            self.ttt_games[self.generate_game_id()] = {"players": [player0, player1], "ids": [ id0, id1], "game": tttG()}
+            self.ttt_games[self.generate_game_id()] = {"players": [player0, player1], "ids": [ id0, id1], "game": tttG.TicTacToe()}
             return (f"True {id0} {id1}")
 
-        return (f"False Found existing gameid: {existing_game}")
+        return (f"False Found existing gameid: {existing_game}. Please add at the end of the command to proceed")
 
     def move_player(self, req_move):
         # supports bot move subcommand by correlating data with make_move
@@ -66,7 +65,6 @@ class TicTacToeSrvr():
         #             
                     if self.ttt_games[gameID[0]]["game"].make_move(int(r), int(c)):
                         update = self.ttt_games[gameID[0]]["game"].update_game()
-    
                         if update[0]:
                             opponent = self.ttt_games[gameID[0]]["ids"][self.ttt_games[gameID[0]]['game'].cur_player]
                             return (f"True False {opponent} {player_moving} has made a move:\n {self.ttt_games[gameID[0]]['game']}")
@@ -88,8 +86,9 @@ class TicTacToeSrvr():
         # deletes game if user denies request
         msg = denied.split()
         player = msg.pop(0) 
-        gameID = msg. pop(0) 
-        msg = " ".join(msg)
+        gameID = msg[0] 
+        msg = " ".join(msg[1:]) if len(msg) > 1 else ""
+    
         gameID = self.find_game(player) if gameID == "None" else [gameID] 
 
         if  isinstance(gameID, list):
@@ -128,24 +127,40 @@ class TicTacToeSrvr():
 
 
     def end_game(self, ending_data): #quit
- 
         player_moving, gameWon, gameID, boardFull = ending_data.split()
         gameID = self.find_game(player_moving) if gameID == "None" else [gameID]
 
         if isinstance(gameID, list):
 
             if len(gameID) == 1:
+                board = self.ttt_games[gameID[0]]["game"]
+                opponent = self.ttt_games[gameID[0]]["ids"][0] if self.ttt_games[gameID[0]]["players"][1] == player_moving else self.ttt_games[gameID[0]]["ids"][1]
+                del self.ttt_games[gameID[0]]
+                
+                if gameWon == 'True':
+                    return (f"True True {opponent} {player_moving} has won the game. {board}")
+                elif boardFull == 'True':
+                    return (f"True True {opponent} It's a draw!. {board}")
 
-                if gameWon:
-                    board = str(self.ttt_games[gameID[0]]["game"])
-                    return self.deny_game_start(f"player_moving gameID {player_moving} has won the game. {board}")
-                
-                elif boardFull:
-                    return self.deny_game_start(f"player_moving gameID Stalemate!. {board}")
-                
-                return self.deny_game_start(f"player_moving gameID {player_moving} has terminated the tic-tac-toe game ")
+                return (f"True True {opponent} {player_moving} has terminated the tic-tac-toe game ")
             
             return (f"False Multiple games found: {gameID}")
 
         return (f"False game not found")
 
+    def autoplay(self, data):
+        # example game play using TicTacToe class from tictactoeGame
+        game = tttG.TicTacToe()
+        game.start_game()
+
+        while game.active:
+            move = randrange(3), randrange(3)
+
+            game.make_move(move[0], move[1])
+            game.update_game()
+
+        if game.winner is None:
+            return (f"No winner this game. {str(game)}")
+        return (f"Player {game.winner} using '{game.markers[game.winner]}' won! {str(game)}")
+        
+    

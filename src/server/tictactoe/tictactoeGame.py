@@ -154,4 +154,3 @@ class TicTacToe(Board, Players):
             return (False, 'full')
 
         return (True, None)
-
