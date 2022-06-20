@@ -9,15 +9,7 @@
 
 ## TODO:
 
-- README
-- [ ] Testing:
-  - [ ] dpytest for discord bot
-  - [ ] [unittest](https://docs.python.org/3/library/unittest.html)
-    - [ ] socket listening message
-- [ ] Automate:
-  - [ ] automate testing
-    - [ ] server
-    - [ ] bot
+- [ ] README
 - [ ] Attempt ansible
 
 ## Completed:
@@ -91,8 +83,7 @@
   - [ ] [unittest](https://docs.python.org/3/library/unittest.html)
     - [x] tic tac toe game
     - [x] tic tac toe server
-- [ ] Automate:
-  - [ ] automate testing
+- [x] Automate:
+  - [x] automate testing
     - [x] src/server/tictactoe
   - [x] if passed, start
-  - [x] else notify tests failed

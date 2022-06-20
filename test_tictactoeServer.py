@@ -1,7 +1,6 @@
 from curses.ascii import isdigit
 import unittest
 import sys
-# sys.path.append("..")
 import src.server.tictactoe.tictactoeServer as tttS
 import src.server.tictactoe.tictactoeGame as tttG
 
@@ -66,6 +65,9 @@ class TestTicTacToeBoardClass(unittest.TestCase):
         result = self.challenged.move_player("p1 1 1 None")
         expected = "True False id0 p1 has made a move:"
         self.assertIn(expected, result)
+
+    # def test_failure(self):
+    #     self.assertTrue(False)
 
     def tearDown(self):
         self.test_tttS = None

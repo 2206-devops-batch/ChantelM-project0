@@ -1,7 +1,5 @@
 import unittest
 import sys
-# sys.path.append("..")
-# import src.server.tictactoe.tictactoeGame as tttG
 import src.server.tictactoe.tictactoeGame as tttG
 
 """
@@ -193,7 +191,7 @@ class TestTicTacToeGameClass(unittest.TestCase):
         self.test_game = None
 
 
-def main(out = sys.stderr, verbosity = 2):
+def main(out = sys.stdout, verbosity=1):
     """
     https://www.geeksforgeeks.org/python-logging-test-output-to-a-file/
     The instance of TestLoader class is similar to defaultTestLoader.
