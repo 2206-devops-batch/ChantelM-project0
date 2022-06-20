@@ -63,7 +63,7 @@ class Tictactoe(commands.Cog):
         if res[0] == 'True':
             opp = int(res.pop(2))
             res.pop(0)
-            res.pop(1)
+            res.pop(0)
             
             opponent = await self.bot.fetch_user(opp)
             msg = " ".join(res)
@@ -111,6 +111,7 @@ class Tictactoe(commands.Cog):
     async def quit(self, ctx, gameID=None):
  
         res = self.contact_server(f"5 {ctx.author.name} False {gameID} False").split()
+        print(res)
 
         if res[0] == 'True':
             opponent = await self.bot.fetch_user(int(res[2]))
