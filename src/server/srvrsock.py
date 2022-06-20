@@ -31,7 +31,6 @@ while True:
 
     try:
         ret_msg=tttSwitcher[func](msg_data)
-        
     except:
         ret_msg += "server unable to find request function"
     

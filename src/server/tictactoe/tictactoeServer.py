@@ -128,22 +128,22 @@ class TicTacToeSrvr():
 
 
     def end_game(self, ending_data): #quit
- 
         player_moving, gameWon, gameID, boardFull = ending_data.split()
         gameID = self.find_game(player_moving) if gameID == "None" else [gameID]
 
         if isinstance(gameID, list):
 
             if len(gameID) == 1:
+                board = self.ttt_games[gameID[0]]["game"]
+                opponent = self.ttt_games[gameID[0]]["ids"][0] if self.ttt_games[gameID[0]]["players"][1] == player_moving else self.ttt_games[gameID[0]]["ids"][1]
+                del self.ttt_games[gameID[0]]
+                
+                if gameWon == 'True':
+                    return (f"True True {opponent} {player_moving} has won the game. {board}")
+                elif boardFull == 'True':
+                    return (f"True True {opponent} It's a draw!. {board}")
 
-                if gameWon:
-                    board = self.ttt_games[gameID[0]]["game"]
-                    return self.deny_game_start(f"{player_moving} {gameID} {player_moving} has won the game. {board}")
-                
-                elif boardFull:
-                    return self.deny_game_start(f"{player_moving} {gameID} Stalemate!. {board}")
-                
-                return self.deny_game_start(f"{player_moving} {gameID} {player_moving} has terminated the tic-tac-toe game ")
+                return (f"True True {opponent} {player_moving} has terminated the tic-tac-toe game ")
             
             return (f"False Multiple games found: {gameID}")
 

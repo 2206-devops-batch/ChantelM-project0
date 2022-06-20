@@ -111,7 +111,6 @@ class Tictactoe(commands.Cog):
     async def quit(self, ctx, gameID=None):
  
         res = self.contact_server(f"5 {ctx.author.name} False {gameID} False").split()
-        print(res)
 
         if res[0] == 'True':
             opponent = await self.bot.fetch_user(int(res[2]))
