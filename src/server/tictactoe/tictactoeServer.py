@@ -7,8 +7,15 @@ class TicTacToeSrvr():
     """
     TicTacToeSrvr class
     Each instance will have (dict) ttt_games and (int)maxID=1000.
-    Serves as a wrapper class TicTacToe
-    
+    Constructor initializes a dictionary for storing data:
+    {
+        gameID: {
+            "players": [player0, player1],
+            "ids": [id0, id1],
+            "game": TicTacToe()
+        }
+    }
+    [self.generate_game_id()] = {"players": [player0, player1], "ids": [ id0, id1], "game": tttG.TicTacToe()}
     """
 
     maxID = 1000
@@ -27,19 +34,22 @@ class TicTacToeSrvr():
         # returns a list of games with 1 or 2 players or None if not found
         all_games = []
 
-        if player1:
+        if player1: # find game with both players
             for key in self.ttt_games:
                 if player0 in self.ttt_games[key]['players'] and player1 in self.ttt_games[key]['players']:
                     return key
-        else:
+        else: # find games of individual player
             for key in self.ttt_games:
                 if player0 in self.ttt_games[key]['players']:
-                    all_games.append(key)
+                    all_games.append([key, self.ttt_games[key]['players'][0], self.ttt_games[key]['players'][0]])
+        
+        if len(all_games) == 1: # if only one game found, return just the gameid
+            return [all_games[0][0]]
         
         return all_games if len(all_games) > 0 else None
 
     def initiate_game_data(self, players_data):
-        # supports bot challenge subcommand by instantiating TicTacToe object and saving player data
+        # Supports bot challenge subcommand by instantiating TicTacToe object and saving player data.
         player0, player1, id0, id1 = players_data.split()
         
         existing_game = self.find_game(player0, player1)
@@ -51,7 +61,7 @@ class TicTacToeSrvr():
         return (f"False Found existing gameid: {existing_game}. Please add at the end of the command to proceed")
 
     def move_player(self, req_move):
-        # supports bot move subcommand by correlating data with make_move
+        # Supports bot move subcommand by correlating data with TicTacToe make_move method.
         player_moving, r, c, gameID = req_move.split()
 
         gameID = self.find_game(player_moving) if gameID == "None" else [gameID] 
@@ -63,12 +73,14 @@ class TicTacToeSrvr():
                 # verify correct player's move
                 if self.ttt_games[gameID[0]]["players"].index(player_moving) == self.ttt_games[gameID[0]]['game'].cur_player:
         #             
-                    if self.ttt_games[gameID[0]]["game"].make_move(int(r), int(c)):
+                    if self.ttt_games[gameID[0]]["game"].make_move(int(r), int(c)): # attempt move & update game
                         update = self.ttt_games[gameID[0]]["game"].update_game()
-                        if update[0]:
+                        
+                        if update[0]: #game still active
                             opponent = self.ttt_games[gameID[0]]["ids"][self.ttt_games[gameID[0]]['game'].cur_player]
-                            return (f"True False {opponent} {player_moving} has made a move:\n {self.ttt_games[gameID[0]]['game']}")
+                            return (f"True False {opponent} {player_moving} has made a move:\n {str(self.ttt_games[gameID[0]]['game'])}")
 
+                        # game inactive
                         elif update[1] == "full":
                             return self.end_game(f"{player_moving} False {gameID[0]} True")
                         else:
@@ -82,8 +94,8 @@ class TicTacToeSrvr():
 
         return (f"False game not found")
 
-    def deny_game_start(self, denied): #deny
-        # deletes game if user denies request
+    def deny_game_start(self, denied):
+        # Supports bot deny subcommand. Deletes game if user denies request
         msg = denied.split()
         player = msg.pop(0) 
         gameID = msg[0] 
@@ -106,7 +118,7 @@ class TicTacToeSrvr():
     
 
     def initiate_game_start(self, move_data): #accept
-        # player who accepts makes the first move
+        # Supports bot accept subcommand. Player who accepts makes the first move
         player_moving, r, c, gameID = move_data.split()
 
         gameID = self.find_game(player_moving) if gameID == "None" else [gameID] 
@@ -115,25 +127,26 @@ class TicTacToeSrvr():
 
             if len(gameID) == 1:
 
-                if self.ttt_games[gameID[0]]["players"].index(player_moving) == 0:
+                if self.ttt_games[gameID[0]]["players"].index(player_moving) == 0: # correct person initiating first move
                     self.ttt_games[gameID[0]]["game"].start_game()
                     return self.move_player(f"{player_moving} {r} {c} {gameID[0]}")
                 
-                return (f"False Waiting on challenger to accept or you should try tictactoe move command")
+                return (f"False Waiting on opponent to accept game")
             
             return (f"False Multiple games found: {gameID}")
 
         return (f"False game not found")
 
 
-    def end_game(self, ending_data): #quit
+    def end_game(self, ending_data):
+        # Supports bot quit subcommand. Terminates and deletes game
         player_moving, gameWon, gameID, boardFull = ending_data.split()
         gameID = self.find_game(player_moving) if gameID == "None" else [gameID]
 
         if isinstance(gameID, list):
 
             if len(gameID) == 1:
-                board = self.ttt_games[gameID[0]]["game"]
+                board = str(self.ttt_games[gameID[0]]["game"])
                 opponent = self.ttt_games[gameID[0]]["ids"][0] if self.ttt_games[gameID[0]]["players"][1] == player_moving else self.ttt_games[gameID[0]]["ids"][1]
                 del self.ttt_games[gameID[0]]
                 
@@ -149,7 +162,7 @@ class TicTacToeSrvr():
         return (f"False game not found")
 
     def autoplay(self, data):
-        # example game play using TicTacToe class from tictactoeGame
+        # Supports bot autoplay subcommand. Example game play using TicTacToe class from tictactoeGame.
         game = tttG.TicTacToe()
         game.start_game()
 

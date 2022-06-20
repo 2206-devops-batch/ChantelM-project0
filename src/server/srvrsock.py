@@ -37,4 +37,4 @@ while True:
     conn_socket.send(ret_msg.encode('utf-8'))
     conn_socket.close()
 
-# TODO: capture ctrl+c, to exit gracefully
+# ctrl+c to exit
