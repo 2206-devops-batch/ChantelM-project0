@@ -2,9 +2,6 @@ import socket
 from dotenv import dotenv_values
 import tictactoe.tictactoeServer as tttS
 
-# HOST = socket.gethostbyname(socket.gethostname()) <- returns loopback ip, not sure why
-# HOST = dotenv_values("../.env")['PRIVATE_IP_ADDRESS'] <- TODO: script private ip via hostname -I 
-
 tttGames = tttS.TicTacToeSrvr()
 
 

@@ -44,13 +44,14 @@ Below is a list of frameworks used in this project.
 
 ## Prerequisites
 
-- discord developer portal
-- invite bot to server
+- [Discord Developer Portal Application](https://discord.com/developers/docs/getting-started)
+  - Application token
+- Remember to [invite the bot to a server](https://discord.com/developers/docs/getting-started#configuring-a-bot)
 
 ## Setup
 
-- .env
-- requirements.txt
+1. Use your application's token and fill in the specified items in [ExampleEnv.txt](ExampleEnv.txt)
+2. Rename ExampleEnv.txt to .env
 
 ## Deployment
 
