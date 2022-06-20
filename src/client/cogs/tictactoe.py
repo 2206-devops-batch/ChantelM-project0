@@ -2,17 +2,14 @@ from dotenv import dotenv_values
 from discord.ext import commands
 import discord
 import socket
-import sys
-import sys
-sys.path.append("../../../")
 
 """
 Commands extension provides the basis for integrating commands and subcommands.
 """
 
-#FIXME: dotenv variables with cogs?
-HOST='localhost'
-PORT=9031
+
+HOST=dotenv_values(".env")['HOST']
+PORT=int(dotenv_values(".env")['PORT'])
 
 
 class Tictactoe(commands.Cog):
