@@ -8,8 +8,8 @@ Commands extension provides the basis for integrating commands and subcommands.
 """
 
 
-HOST=dotenv_values(".env")['HOST']
-PORT=int(dotenv_values(".env")['PORT'])
+HOST=
+PORT=
 
 
 class Tictactoe(commands.Cog):
@@ -23,6 +23,25 @@ class Tictactoe(commands.Cog):
         self.srvr_HOST = HOST
         self.srvr_PORT = PORT
 
+    def format_msg_board(self, msg):
+        init_split = "TicTacToe Board "
+        b_split = "-------------"
+        msg_final, board = msg.split("TicTacToe Board ")
+        msg_final += init_split + "\n"
+        board_split = board.split(b_split)
+
+        for i in board_split:
+            i.replace('|', ' | ')
+
+        board_split[0] = '`' + board_split[0]
+        
+        board_split.insert(1, f"\n{b_split}\n")
+        board_split.insert(3,f"\n{b_split}\n")
+        board_split.insert(5,f"\n{b_split}\n`")
+
+        msg_final += "".join(board_split)
+        return msg_final
+    
     def contact_server(self, msg):
         lanClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         lanClient.connect((self.srvr_HOST, self.srvr_PORT))
@@ -63,7 +82,7 @@ class Tictactoe(commands.Cog):
             res.pop(0)
             
             opponent = await self.bot.fetch_user(opp)
-            msg = " ".join(res)
+            msg = self.format_msg_board(" ".join(res))
 
             await ctx.send(f"Game updated with your move {opponent.name} and notified")
             await opponent.send(msg)
@@ -94,7 +113,8 @@ class Tictactoe(commands.Cog):
         
         if res[0] == 'True':
             opponent = await self.bot.fetch_user(int(res[2]))
-            msg = " ".join(res[3:])
+            # msg = " ".join(res[3:])
+            msg = self.format_msg_board(" ".join(res[3:]))
 
             await opponent.send(msg)
             await ctx.send(msg)
