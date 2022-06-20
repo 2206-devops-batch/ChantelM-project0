@@ -1,7 +1,6 @@
 import sys
-sys.path.append("../../../")
-# from src.server.tictactoe.tictactoeGame import TicTacToe as tttG
-import tictactoe.tictactoeGame as tttG
+sys.path.append("./src/server/tictactoe")
+import tictactoeGame as tttG
 from random import randint, randrange
 
 class TicTacToeSrvr():
@@ -165,8 +164,3 @@ class TicTacToeSrvr():
         return (f"Player {game.winner} using '{game.markers[game.winner]}' won! {str(game)}")
         
     
-
-
-
-tS = TicTacToeSrvr()
-tS.autoplay("None")
