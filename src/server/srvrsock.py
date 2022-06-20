@@ -35,7 +35,6 @@ while True:
     except:
         ret_msg += "server unable to find request function"
     
-    # ret_msg += "server unable to find request function"
     conn_socket.send(ret_msg.encode('utf-8'))
     conn_socket.close()
 

@@ -79,13 +79,11 @@ class Tictactoe(commands.Cog):
     async def deny(self, ctx, gameID=None):
 
         res = self.contact_server(f"3 {ctx.author.name} None ").split()
-        print(res)
         
         if res[0] == 'True':
-            msg = " ".join(res[3:])
             opponent = await self.bot.fetch_user(int(res[2]))
-            opponent.send(msg)
-            ctx.send(f"{opponent.name} has been notified you do not wish to play tictactoe.")
+            await opponent.send(f"{ctx.author.name} does not wish to play tictactoe at the moment")
+            await ctx.send(f"{opponent.name} has been notified you do not wish to play tictactoe.")
 
         else:
             res.pop(0)

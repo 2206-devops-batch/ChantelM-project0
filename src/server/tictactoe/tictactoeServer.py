@@ -87,8 +87,9 @@ class TicTacToeSrvr():
         # deletes game if user denies request
         msg = denied.split()
         player = msg.pop(0) 
-        gameID = msg. pop(0) 
-        msg = " ".join(msg)
+        gameID = msg[0] 
+        msg = " ".join(msg[1:]) if len(msg) > 1 else ""
+    
         gameID = self.find_game(player) if gameID == "None" else [gameID] 
 
         if  isinstance(gameID, list):
@@ -137,12 +138,12 @@ class TicTacToeSrvr():
 
                 if gameWon:
                     board = self.ttt_games[gameID[0]]["game"]
-                    return self.deny_game_start(f"player_moving gameID {player_moving} has won the game. {board}")
+                    return self.deny_game_start(f"{player_moving} {gameID} {player_moving} has won the game. {board}")
                 
                 elif boardFull:
-                    return self.deny_game_start(f"player_moving gameID Stalemate!. {board}")
+                    return self.deny_game_start(f"{player_moving} {gameID} Stalemate!. {board}")
                 
-                return self.deny_game_start(f"player_moving gameID {player_moving} has terminated the tic-tac-toe game ")
+                return self.deny_game_start(f"{player_moving} {gameID} {player_moving} has terminated the tic-tac-toe game ")
             
             return (f"False Multiple games found: {gameID}")
 
