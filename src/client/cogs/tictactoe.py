@@ -1,4 +1,3 @@
-from dotenv import dotenv_values
 from discord.ext import commands
 import discord
 import socket
@@ -8,20 +7,15 @@ Commands extension provides the basis for integrating commands and subcommands.
 """
 
 
-HOST='localhost'
-PORT=9031
-
-
 class Tictactoe(commands.Cog):
     """
     TicTacToe subclass of discord.ext.commands.Cog class used for organizing commands, listeners, and state.
 
-    TODO: look into cogs as inter-command communication
     """
     def __init__(self, bot):
         self.bot = bot
-        self.srvr_HOST = HOST
-        self.srvr_PORT = PORT
+        self.srvr_HOST = self.bot.lanHost
+        self.srvr_PORT = self.bot.lanPort
 
     def format_msg_board(self, msg):
         init_split = "TicTacToe Board "

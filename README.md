@@ -65,9 +65,7 @@ Below is a list of frameworks used in this project.
 
 1. Use your application's token and fill in the specified items in [ExampleEnv.txt](ExampleEnv.txt)
 2. Rename ExampleEnv.txt to .env
-3. Using the same HOST and PORT values from the newly created .env, update lines 11 and 12
-   in [tictactoe.py](src/client/cogs/tictactoe.py) with the associated values.
-4. Install requirements: `pip install -r requirements.txt`
+3. Install requirements: `pip install -r requirements.txt`
 
 ## Deployment
 
